@@ -14,3 +14,7 @@ resource:
   prerequisites: []
   learning_outcomes:
     - "State what the learner should be able to understand or do after completing the resource."
+  review_paths:
+    - "course/**"
+    - "exercises/**"
+    - "solutions/**"
