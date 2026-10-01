@@ -4,11 +4,13 @@ on:
   push:
     paths:
       - 'pls.yaml'
+      - 'pls-review.yaml'
       - '**/*.md'
       - '.github/workflows/validate-pls.yml'
   pull_request:
     paths:
       - 'pls.yaml'
+      - 'pls-review.yaml'
       - '**/*.md'
       - '.github/workflows/validate-pls.yml'
 
@@ -33,5 +35,11 @@ jobs:
       - name: Install validator dependencies
         run: python -m pip install --upgrade pip pyyaml jsonschema
 
-      - name: Validate PLS metadata
-        run: python .pls-standard/tools/pls_lint.py pls.yaml --schema .pls-standard/schema/pls.schema.json
+      - name: Validate PLS metadata and review evidence
+        shell: bash
+        run: |
+          args=(pls.yaml --schema .pls-standard/schema/pls.schema.json --review-schema .pls-standard/schema/pls-review.schema.json)
+          if [[ -f pls-review.yaml ]]; then
+            args+=(--review pls-review.yaml)
+          fi
+          python .pls-standard/tools/pls_lint.py "${args[@]}"
