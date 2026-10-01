@@ -82,6 +82,13 @@ def main() -> int:
         return 1
 
     review_required = status in {"reviewed", "compliant"}
+    if review_required and not data["resource"].get("review_paths"):
+        print(
+            f"PLS lint: ERROR: status {status} requires resource.review_paths",
+            file=sys.stderr,
+        )
+        return 1
+
     if review_required and args.review is None:
         print(
             f"PLS lint: ERROR: status {status} requires --review pls-review.yaml",
@@ -89,6 +96,7 @@ def main() -> int:
         )
         return 1
 
+    review = None
     if args.review is not None:
         try:
             review = load_yaml(args.review)
@@ -127,7 +135,7 @@ def main() -> int:
         f"PLS lint: OK — specification {data['pls']['specification']}, "
         f"levels {entry} -> {exit_}, status {status}"
     )
-    if args.review is not None:
+    if review is not None:
         print(
             f"PLS lint: review evidence OK — result {review['review']['result']}, "
             f"reviewer {review['reviewer']['name']}, commit {review['review']['resource_commit']}"
