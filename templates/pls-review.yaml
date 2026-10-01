@@ -1,0 +1,23 @@
+review:
+  specification: "0.1"
+  resource_commit: "0123456789abcdef0123456789abcdef01234567"
+  date: "2026-10-01"
+  scope: "Human pedagogical review of the declared PLS educational scope."
+  result: reviewed
+
+reviewer:
+  name: "Reviewer Name"
+  affiliation: "Optional affiliation"
+  role: "Pedagogical reviewer"
+  independent_from_primary_author: true
+
+findings:
+  blocking: 0
+  major: 0
+  minor: 0
+  note: 0
+
+evidence:
+  review_record: "PLS-REVIEW.md"
+  checklist: "PLS-COMPLIANCE.md"
+  additional: []
