@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
-import json
-import shutil
 import subprocess
 import tempfile
 import unittest
@@ -68,11 +66,14 @@ def attestation_data(review_commit: str, through_commit: str, changed_paths: lis
             "review_commit": review_commit,
             "through_commit": through_commit,
             "date": "2026-10-01",
-            "classification": "non-material",
-            "reason": "Spelling-only correction that does not change learning meaning.",
         },
         "attestant": {"name": "Maintainer", "role": "Maintainer"},
-        "assessment": {"changed_paths": changed_paths, "learning_meaning_changed": False},
+        "assessment": {
+            "non_material": True,
+            "reason": "Spelling-only correction that does not change terminology, outcomes, examples, exercises, or learning meaning.",
+            "changed_paths": changed_paths,
+            "evidence": [],
+        },
     }
 
 
