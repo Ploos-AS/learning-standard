@@ -1,0 +1,28 @@
+pls:
+  specification: "0.1"
+  status: "adopting"
+  scope: "Describe the educational scope covered by this declaration."
+  levels:
+    entry: 0
+    exit: 3
+  prerequisites:
+    - "List explicit prerequisites, or use an empty list when none are assumed."
+  outcomes:
+    - "State what the learner should be able to understand or do after completing the resource."
+  languages:
+    primary: "no"
+    supported:
+      - "no"
+      - "en"
+  glossary:
+    enabled: true
+  exercises:
+    enabled: true
+    taxonomy:
+      - recall
+      - apply
+      - explain
+      - debug
+      - create
+  review:
+    pedagogical_review_required_for_compliance: true
