@@ -24,3 +24,6 @@ jobs:
 
       - name: Validate example metadata
         run: python tools/pls_lint.py examples/pls.yaml
+
+      - name: Validate review evidence template
+        run: python tools/pls_lint.py examples/pls.yaml --review templates/pls-review.yaml
