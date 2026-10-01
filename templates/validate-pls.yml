@@ -38,4 +38,10 @@ jobs:
 
       - name: Check review freshness
         if: hashFiles('pls-review.yaml') != ''
-        run: python .pls-standard/tools/pls_staleness.py pls.yaml pls-review.yaml --repo-root .
+        shell: bash
+        run: |
+          args=(pls.yaml pls-review.yaml --repo-root . --attestation-schema .pls-standard/schema/pls-attestation.schema.json)
+          if [[ -f pls-attestation.yaml ]]; then
+            args+=(--attestation pls-attestation.yaml)
+          fi
+          python .pls-standard/tools/pls_staleness.py "${args[@]}"
