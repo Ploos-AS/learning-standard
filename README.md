@@ -23,7 +23,11 @@ A PLS-compliant learning resource should:
 
 ## Version
 
-Current development version: **PLS 0.1**
+Current specification: **PLS 0.1**
+
+Initial release package: **v0.1.0**
+
+PLS 0.x remains pre-1.0 and may introduce breaking changes in later minor releases. Downstream repositories should pin an immutable release tag or exact commit rather than track `main`. See [`RELEASING.md`](RELEASING.md).
 
 This repository is the canonical specification for the standard.
 
@@ -39,6 +43,8 @@ This repository is the canonical specification for the standard.
 - [`REVIEW.md`](REVIEW.md) — human pedagogical review requirements
 - [`LIFECYCLE.md`](LIFECYCLE.md) — review freshness, material changes, and re-review rules
 - [`ATTESTATION.md`](ATTESTATION.md) — controlled non-material change attestations
+- [`RELEASING.md`](RELEASING.md) — release, compatibility, and downstream pinning policy
+- [`CHANGELOG.md`](CHANGELOG.md) — release history
 - [`PILOT.md`](PILOT.md) — checklist for the first real-world adoption
 
 ## Machine-readable metadata
@@ -124,7 +130,9 @@ This means that the resource assumes approximately PLS-0 subject knowledge at en
 
 ## CI
 
-This repository validates the reference metadata in GitHub Actions. Ploos Edu repositories can copy [`templates/validate-pls.yml`](templates/validate-pls.yml) to `.github/workflows/validate-pls.yml` to validate their own PLS integration.
+This repository validates schemas, templates, tooling, lifecycle behavior, and the state-machine test matrix in GitHub Actions.
+
+Ploos Edu repositories can copy [`templates/validate-pls.yml`](templates/validate-pls.yml) to `.github/workflows/validate-pls.yml`, but downstream use should replace any development ref with an immutable release tag or exact commit as described in `RELEASING.md`.
 
 The CI template uses full Git history so reviewed projects can compare HEAD with the commit recorded in `pls-review.yaml`. If `pls-attestation.yaml` exists, the lifecycle checker validates that it covers the complete pedagogically scoped change range and that no later scoped changes remain uncovered.
 
@@ -136,4 +144,4 @@ PLS is intended for all Ploos educational material, including mathematics, compu
 
 ## Status
 
-PLS 0.1 is an initial working specification. Requirements may change before PLS 1.0.
+PLS 0.1 is the initial working specification. The release package is versioned separately as `v0.1.0`. Requirements may change before PLS 1.0.
