@@ -35,12 +35,14 @@ This repository is the canonical specification for the standard.
 - [`COMPLIANCE.md`](COMPLIANCE.md) — checklist for declaring PLS alignment
 - [`GLOSSARY.md`](GLOSSARY.md) — terminology and glossary rules
 - [`EXERCISES.md`](EXERCISES.md) — common exercise taxonomy
+- [`ADOPTION.md`](ADOPTION.md) — how other repositories adopt and declare PLS
+- [`PILOT.md`](PILOT.md) — checklist for the first real-world adoption
 
 ## Machine-readable metadata
 
-PLS resources can declare their pedagogical contract in a repository-level `pls.yaml` file.
+PLS resources declare their pedagogical contract in a repository-level `pls.yaml` file.
 
-The canonical schema is [`schema/pls.schema.json`](schema/pls.schema.json), with a minimal example in [`examples/pls.yaml`](examples/pls.yaml).
+The canonical schema is [`schema/pls.schema.json`](schema/pls.schema.json). A validated example is available in [`examples/pls.yaml`](examples/pls.yaml), and a copy-ready starting point is in [`templates/pls.yaml`](templates/pls.yaml).
 
 Example:
 
@@ -49,7 +51,7 @@ pls:
   specification: "0.1"
   entry_level: 0
   exit_level: 3
-  status: draft
+  status: adopting
 
 resource:
   title: "Example resource"
@@ -69,6 +71,21 @@ python tools/pls_lint.py pls.yaml
 
 `pls-lint` validates both the schema and PLS-specific rules such as `exit_level >= entry_level`.
 
+## Adoption status
+
+PLS uses a progressive adoption model:
+
+```text
+adopting -> aligned -> reviewed -> compliant
+```
+
+- **adopting** — PLS integration is in progress;
+- **aligned** — structure and machine-readable integration are complete;
+- **reviewed** — human pedagogical review has been completed;
+- **compliant** — all applicable PLS MUST requirements are satisfied for the declared scope.
+
+Machine validation MUST NOT by itself grant `reviewed` or `compliant` status.
+
 ## Level notation
 
 Learning resources may declare an entry and exit level, for example:
@@ -81,7 +98,7 @@ This means that the resource assumes approximately PLS-0 subject knowledge at en
 
 ## CI
 
-This repository validates the reference metadata in GitHub Actions. Ploos Edu repositories may reuse the schema and validator to enforce their own `pls.yaml` metadata in CI.
+This repository validates the reference metadata in GitHub Actions. Ploos Edu repositories can copy [`templates/validate-pls.yml`](templates/validate-pls.yml) to `.github/workflows/validate-pls.yml` to validate their own `pls.yaml`.
 
 Machine validation complements pedagogical review; it does not replace the human compliance review described in `COMPLIANCE.md`.
 
