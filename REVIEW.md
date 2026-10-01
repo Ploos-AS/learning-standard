@@ -36,6 +36,8 @@ The review MUST identify:
 
 The review applies only to that declared scope and revision.
 
+A project preparing for `reviewed` or `compliant` status MUST also declare `resource.review_paths` in `pls.yaml` so later material changes can be detected according to `LIFECYCLE.md`.
+
 ## 4. Required review areas
 
 The reviewer MUST evaluate all applicable sections of `COMPLIANCE.md`:
@@ -141,17 +143,23 @@ A `reviewed` project may move to `compliant` only when:
 
 PLS 0.1 compliance is a project declaration backed by review evidence. It is not third-party certification.
 
-## 10. Re-review
+## 10. Review freshness and re-review
 
-A new pedagogical review SHOULD be performed when a change materially affects:
+Review validity after later repository changes is governed by `LIFECYCLE.md`.
+
+A new pedagogical review or explicit non-material-change assessment is required when later changes affect the reviewed pedagogical scope.
+
+Material examples include changes to:
 
 - prerequisites;
 - learning outcomes;
 - declared PLS level;
 - curriculum structure;
 - core explanations;
-- assessment strategy;
+- exercises or assessment strategy;
 - a supported language edition;
 - the targeted PLS specification version.
 
-Minor typo, formatting, build, or infrastructure changes do not normally invalidate an existing review.
+Minor typo, formatting, build, packaging, CI, or infrastructure changes do not normally invalidate an existing review when learning meaning is unchanged.
+
+A project MUST NOT present a stale review as current `reviewed` or `compliant` evidence.
