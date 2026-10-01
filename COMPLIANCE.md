@@ -9,6 +9,8 @@ PLS: <entry> -> <exit>
 PLS specification: 0.1
 ```
 
+Human review is governed by `REVIEW.md`. A completed checklist without retained review evidence is not sufficient for `reviewed` or `compliant` status.
+
 ## A. Scope and prerequisites
 
 - [ ] The scope of the resource is stated.
@@ -63,7 +65,20 @@ For multi-language material:
 - [ ] PLS entry and exit declarations are consistent unless a difference is intentional and documented.
 - [ ] Pedagogical adaptation is preferred over awkward literal translation where needed.
 
-## G. Project declaration
+## G. Review evidence
+
+For `reviewed` or `compliant` status:
+
+- [ ] Review evidence identifies the reviewer.
+- [ ] Review evidence identifies the reviewed commit or tag.
+- [ ] Review evidence identifies the PLS version and declared level range.
+- [ ] Review scope and language editions are recorded.
+- [ ] Sampling, if used, is documented.
+- [ ] Findings are classified and their disposition is recorded.
+- [ ] No unresolved blocking finding remains for `reviewed` status.
+- [ ] No unresolved applicable MUST failure remains for `compliant` status.
+
+## H. Project declaration
 
 A project reviewed against PLS MAY include a declaration such as:
 
@@ -74,15 +89,14 @@ This resource targets **PLS 0 -> 3** and is reviewed against
 **Ploos Learning Standard 0.1**.
 ```
 
-## Compliance status
+## Status meanings
 
-Suggested project statuses during the 0.x period:
-
-- **PLS-aligned** — designed using PLS principles, but not fully reviewed;
-- **PLS-reviewed** — checklist reviewed against a named PLS version;
+- **PLS-aligned** — intentionally designed around PLS and machine-valid, but not yet independently reviewed.
+- **PLS-reviewed** — traceable human review completed against a named PLS version; no blocking findings remain.
+- **PLS-compliant** — reviewed and every applicable PLS MUST requirement for the declared scope is satisfied.
 - **PLS-experimental** — exploring a PLS practice or extension not yet standardized.
 
-PLS 0.1 does not define a formal certification program.
+PLS 0.1 does not define a third-party certification program.
 
 ## CI opportunities
 
@@ -96,6 +110,7 @@ Some requirements can later be partially automated. Candidate checks include:
 - exercise/checkpoint presence;
 - detection of discouraged unexplained-language patterns;
 - broken cross-references;
-- consistency between language editions.
+- consistency between language editions;
+- presence and schema of review evidence metadata.
 
 Automated checks MUST NOT be treated as sufficient evidence of pedagogical quality. Human review remains necessary.
