@@ -1,0 +1,17 @@
+pls:
+  specification: "0.1"
+  entry_level: 0
+  exit_level: 3
+  status: draft
+
+resource:
+  title: "Example PLS Resource"
+  type: book
+  language:
+    - en
+  scope: "An example showing the minimum machine-readable metadata for a PLS resource."
+  prerequisites: []
+  learning_outcomes:
+    - "Explain the core concepts in the stated scope using correct terminology."
+    - "Apply the concepts to representative problems."
+    - "Justify solutions rather than only reproduce procedures."
