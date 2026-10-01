@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Ploos-AS/learning-standard/schema/pls.schema.json",
+  "title": "Ploos Learning Standard metadata",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["pls", "resource"],
+  "properties": {
+    "pls": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["specification", "entry_level", "exit_level", "status"],
+      "properties": {
+        "specification": {"type": "string", "const": "0.1"},
+        "entry_level": {"type": "integer", "minimum": 0, "maximum": 5},
+        "exit_level": {"type": "integer", "minimum": 0, "maximum": 5},
+        "status": {"type": "string", "enum": ["planned", "draft", "reviewed", "compliant"]}
+      }
+    },
+    "resource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["title", "type", "language", "scope", "prerequisites", "learning_outcomes"],
+      "properties": {
+        "title": {"type": "string", "minLength": 1},
+        "type": {"type": "string", "enum": ["book", "course", "lesson", "tutorial", "lab", "reference", "other"]},
+        "language": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 2}
+        },
+        "scope": {"type": "string", "minLength": 1},
+        "prerequisites": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "learning_outcomes": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"type": "string", "minLength": 1}
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "pls": {
+            "properties": {
+              "entry_level": {"type": "integer"},
+              "exit_level": {"type": "integer"}
+            }
+          }
+        }
+      },
+      "then": {}
+    }
+  ]
+}
