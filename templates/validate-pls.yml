@@ -2,17 +2,7 @@ name: Validate PLS
 
 on:
   push:
-    paths:
-      - 'pls.yaml'
-      - 'pls-review.yaml'
-      - '**/*.md'
-      - '.github/workflows/validate-pls.yml'
   pull_request:
-    paths:
-      - 'pls.yaml'
-      - 'pls-review.yaml'
-      - '**/*.md'
-      - '.github/workflows/validate-pls.yml'
 
 jobs:
   validate-pls:
