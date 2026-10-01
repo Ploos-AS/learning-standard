@@ -38,6 +38,7 @@ This repository is the canonical specification for the standard.
 - [`ADOPTION.md`](ADOPTION.md) — how other repositories adopt and declare PLS
 - [`REVIEW.md`](REVIEW.md) — human pedagogical review requirements
 - [`LIFECYCLE.md`](LIFECYCLE.md) — review freshness, material changes, and re-review rules
+- [`ATTESTATION.md`](ATTESTATION.md) — controlled non-material change attestations
 - [`PILOT.md`](PILOT.md) — checklist for the first real-world adoption
 
 ## Machine-readable metadata
@@ -78,7 +79,7 @@ python tools/pls_lint.py pls.yaml
 
 `pls-lint` validates both the schema and PLS-specific rules such as `exit_level >= entry_level`. For `reviewed` and `compliant` status it also requires valid machine-readable review evidence.
 
-## Review evidence and freshness
+## Review evidence, freshness, and attestations
 
 Completed human reviews are recorded in `pls-review.yaml` and normally accompanied by a human-readable `PLS-REVIEW.md`.
 
@@ -91,6 +92,10 @@ python tools/pls_staleness.py pls.yaml pls-review.yaml --repo-root .
 The checker compares the reviewed commit with the current repository state. Changes inside declared `review_paths`, or semantic changes to PLS scope, prerequisites, outcomes, levels, languages, or specification version, make the review stale until assessed or re-reviewed.
 
 Build, CI, packaging, and other non-pedagogical repository changes do not by themselves invalidate a review.
+
+A clearly non-material change inside `review_paths` MAY be covered by a machine-readable `pls-attestation.yaml`. The attestation must reference the original review baseline, identify the exact changed pedagogical paths, name an attestant, explain why learning meaning is unchanged, and cover a specific `through_commit`.
+
+Attestations cannot override material PLS metadata changes or substantive pedagogical changes. When in doubt, re-review.
 
 ## Adoption status
 
@@ -121,7 +126,7 @@ This means that the resource assumes approximately PLS-0 subject knowledge at en
 
 This repository validates the reference metadata in GitHub Actions. Ploos Edu repositories can copy [`templates/validate-pls.yml`](templates/validate-pls.yml) to `.github/workflows/validate-pls.yml` to validate their own PLS integration.
 
-The CI template uses full Git history so reviewed projects can compare HEAD with the commit recorded in `pls-review.yaml`.
+The CI template uses full Git history so reviewed projects can compare HEAD with the commit recorded in `pls-review.yaml`. If `pls-attestation.yaml` exists, the lifecycle checker validates that it covers the complete pedagogically scoped change range and that no later scoped changes remain uncovered.
 
 Machine validation complements pedagogical review; it does not replace the human compliance review described in `COMPLIANCE.md` and `REVIEW.md`.
 
