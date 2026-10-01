@@ -14,7 +14,10 @@
         "specification": {"type": "string", "const": "0.1"},
         "entry_level": {"type": "integer", "minimum": 0, "maximum": 5},
         "exit_level": {"type": "integer", "minimum": 0, "maximum": 5},
-        "status": {"type": "string", "enum": ["planned", "draft", "reviewed", "compliant"]}
+        "status": {
+          "type": "string",
+          "enum": ["adopting", "aligned", "reviewed", "compliant"]
+        }
       }
     },
     "resource": {
@@ -42,20 +45,5 @@
         }
       }
     }
-  },
-  "allOf": [
-    {
-      "if": {
-        "properties": {
-          "pls": {
-            "properties": {
-              "entry_level": {"type": "integer"},
-              "exit_level": {"type": "integer"}
-            }
-          }
-        }
-      },
-      "then": {}
-    }
-  ]
+  }
 }
