@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Ploos-AS/learning-standard/schema/pls-review.schema.json",
+  "title": "Ploos Learning Standard review evidence",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["review", "reviewer", "findings", "evidence"],
+  "properties": {
+    "review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["specification", "resource_commit", "date", "scope", "result"],
+      "properties": {
+        "specification": {"type": "string", "const": "0.1"},
+        "resource_commit": {
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{7,40}$"
+        },
+        "date": {"type": "string", "format": "date"},
+        "scope": {"type": "string", "minLength": 1},
+        "result": {
+          "type": "string",
+          "enum": ["reviewed", "compliant"]
+        }
+      }
+    },
+    "reviewer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "independent_from_primary_author"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "affiliation": {"type": "string", "minLength": 1},
+        "role": {"type": "string", "minLength": 1},
+        "independent_from_primary_author": {"type": "boolean", "const": true}
+      }
+    },
+    "findings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["blocking", "major", "minor", "note"],
+      "properties": {
+        "blocking": {"type": "integer", "minimum": 0, "const": 0},
+        "major": {"type": "integer", "minimum": 0},
+        "minor": {"type": "integer", "minimum": 0},
+        "note": {"type": "integer", "minimum": 0}
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["review_record", "checklist"],
+      "properties": {
+        "review_record": {"type": "string", "minLength": 1},
+        "checklist": {"type": "string", "minLength": 1},
+        "additional": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        }
+      }
+    }
+  }
+}
