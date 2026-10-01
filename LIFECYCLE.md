@@ -53,7 +53,7 @@ The following changes normally do not require a new pedagogical review when they
 - generated artifacts;
 - non-educational tooling.
 
-Path-based CI cannot reliably distinguish semantic from formatting-only changes. A project MAY therefore perform a documented maintainer assessment for a change inside `review_paths` and advance the review baseline without a full re-review when the change is demonstrably non-material.
+Path-based CI cannot reliably distinguish semantic from formatting-only changes. A project MAY therefore use the non-material attestation process defined in `ATTESTATION.md` for a change inside `review_paths` when the change is demonstrably non-material.
 
 ## 5. Baseline
 
@@ -63,23 +63,44 @@ For `reviewed` or `compliant` status, CI SHOULD compare later commits against th
 
 If no pedagogically material file has changed since the baseline, the review remains current.
 
-If a pedagogically material file has changed, the review becomes stale until one of these occurs:
+If a pedagogically scoped file has changed, the review becomes stale until one of these occurs:
 
 1. a new or follow-up human review covers the change; or
-2. a documented maintainer assessment establishes that the change is non-material and updates the review evidence baseline.
+2. a valid `pls-attestation.yaml` establishes that all scoped changes through a declared `through_commit` are non-material.
 
-## 6. Status while stale
+The original review baseline MUST remain visible in `pls-review.yaml`. A non-material attestation does not rewrite review history.
+
+## 6. Non-material attestation
+
+A non-material attestation is a narrow freshness exception, not a second kind of review.
+
+It MUST:
+
+- reference the same `review.resource_commit` as `pls-review.yaml`;
+- identify a descendant `through_commit`;
+- identify an attestant and substantive reason;
+- list exactly the pedagogically scoped files changed between the review baseline and `through_commit`;
+- assert only changes that preserve learning meaning.
+
+It MUST NOT override changes to material PLS metadata such as specification version, levels, scope, prerequisites, language set, learning outcomes, or review paths.
+
+If a pedagogically scoped file changes after the attested `through_commit`, the attestation no longer covers HEAD.
+
+See `ATTESTATION.md` for the normative policy.
+
+## 7. Status while stale
 
 A project MUST NOT present a stale review as current.
 
 When a review becomes stale, the project SHOULD either:
 
-- return `pls.status` to `aligned`; or
-- complete the necessary review before merging the material change.
+- return `pls.status` to `aligned`;
+- complete the necessary review before merging the material change; or
+- use a valid non-material attestation when the change meets the strict attestation criteria.
 
 A project MUST NOT retain `compliant` status while its supporting review is stale.
 
-## 7. CI behavior
+## 8. CI behavior
 
 PLS staleness tooling SHOULD:
 
@@ -88,15 +109,17 @@ PLS staleness tooling SHOULD:
 - require a valid `pls-review.yaml`;
 - verify that `review.resource_commit` exists in repository history;
 - list files changed since the reviewed commit;
-- fail when any changed file matches a declared review path;
-- ignore changes outside the declared pedagogical review paths.
+- fail when any changed file matches a declared review path unless a valid non-material attestation covers all such changes;
+- ignore changes outside the declared pedagogical review paths;
+- reject attestations when material PLS metadata changed;
+- reject attestations that omit changed pedagogical paths or leave later pedagogical changes uncovered.
 
 The CI result is conservative evidence of freshness. It is not a substitute for human judgment about pedagogical meaning.
 
-## 8. History availability
+## 9. History availability
 
 Staleness checks require Git history reaching the reviewed commit. CI integrations SHOULD therefore use a full checkout (`fetch-depth: 0`) or otherwise fetch the reviewed revision before running the staleness check.
 
-## 9. PLS version changes
+## 10. PLS version changes
 
-Changing the targeted PLS specification version always requires explicit review assessment. A review against PLS 0.1 cannot silently establish review status against a later specification.
+Changing the targeted PLS specification version always requires explicit review assessment. A review against PLS 0.1 cannot silently establish review status against a later specification, and a non-material attestation cannot bridge a specification-version change.
