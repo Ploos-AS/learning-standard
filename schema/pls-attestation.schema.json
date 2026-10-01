@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Ploos-AS/learning-standard/schema/pls-attestation.schema.json",
+  "title": "Ploos Learning Standard non-material change attestation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["attestation", "attestant", "assessment"],
+  "properties": {
+    "attestation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["specification", "review_commit", "through_commit", "date"],
+      "properties": {
+        "specification": {"type": "string", "const": "0.1"},
+        "review_commit": {"type": "string", "pattern": "^[0-9a-fA-F]{7,40}$"},
+        "through_commit": {"type": "string", "pattern": "^[0-9a-fA-F]{7,40}$"},
+        "date": {"type": "string", "format": "date"}
+      }
+    },
+    "attestant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "role"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "role": {"type": "string", "minLength": 1},
+        "affiliation": {"type": "string", "minLength": 1}
+      }
+    },
+    "assessment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["non_material", "reason", "changed_paths"],
+      "properties": {
+        "non_material": {"type": "boolean", "const": true},
+        "reason": {"type": "string", "minLength": 20},
+        "changed_paths": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "evidence": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        }
+      }
+    }
+  }
+}
