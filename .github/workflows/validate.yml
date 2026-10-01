@@ -33,5 +33,22 @@ jobs:
       - name: Validate review evidence template
         run: python tools/pls_lint.py examples/pls.yaml --review templates/pls-review.yaml
 
+      - name: Validate attestation template schema
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          import yaml
+          from jsonschema import Draft202012Validator, FormatChecker
+
+          schema = json.loads(Path('schema/pls-attestation.schema.json').read_text())
+          data = yaml.safe_load(Path('templates/pls-attestation.yaml').read_text())
+          errors = list(Draft202012Validator(schema, format_checker=FormatChecker()).iter_errors(data))
+          if errors:
+              raise SystemExit('\n'.join(error.message for error in errors))
+          print('PLS attestation template: OK')
+          PY
+
       - name: Verify staleness tool skips non-reviewed example
-        run: python tools/pls_staleness.py examples/pls.yaml templates/pls-review.yaml --repo-root .
+        run: python tools/pls_staleness.py examples/pls.yaml templates/pls-review.yaml --repo-root . --attestation-schema schema/pls-attestation.schema.json
