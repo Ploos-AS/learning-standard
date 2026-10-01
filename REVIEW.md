@@ -81,15 +81,23 @@ A project MAY claim `reviewed` with unresolved `required` findings if the review
 
 ## 7. Evidence
 
-A `reviewed` project MUST retain review evidence in the repository or in a stable linked review artifact.
+A `reviewed` project MUST retain both human-readable and machine-readable review evidence.
 
-The preferred repository artifact is:
+The preferred human-readable artifact is:
 
 ```text
 PLS-REVIEW.md
 ```
 
-The evidence MUST record at least:
+The canonical machine-readable artifact is:
+
+```text
+pls-review.yaml
+```
+
+`pls-review.yaml` MUST validate against `schema/pls-review.schema.json` for the declared PLS version.
+
+The human-readable evidence MUST record at least:
 
 - reviewer name or stable identity;
 - review date;
@@ -101,15 +109,22 @@ The evidence MUST record at least:
 - findings and their disposition;
 - overall review conclusion.
 
+The machine-readable evidence MUST identify the reviewed revision, reviewer, date, scope, review result, finding counts, and stable evidence paths.
+
+A `pls-review.yaml` file represents a completed review. Draft or pending review data SHOULD remain in `PLS-REVIEW.md` or another working artifact and MUST NOT be represented as valid completed review evidence.
+
 ## 8. Status transition
 
 A project may move from `aligned` to `reviewed` only when:
 
 - PLS metadata validation passes;
 - the pedagogical review described here is complete;
-- review evidence is retained;
+- `PLS-REVIEW.md` or equivalent human-readable evidence is retained;
+- valid `pls-review.yaml` evidence is retained;
 - no unresolved blocking finding remains;
 - README and `pls.yaml` are updated consistently.
+
+CI MUST reject a `reviewed` or `compliant` status when valid review evidence is absent.
 
 `reviewed` means that the resource has completed a traceable human review against the declared PLS version. It does not automatically mean that every PLS MUST requirement is satisfied.
 
@@ -120,6 +135,7 @@ A `reviewed` project may move to `compliant` only when:
 - every applicable PLS MUST requirement is satisfied for the declared scope;
 - all required findings from the review have been resolved or explicitly shown not to apply;
 - review evidence identifies the revision for which compliance is claimed;
+- `pls-review.yaml` records `review.result: compliant`;
 - metadata and CI validation pass;
 - language-equivalence requirements are satisfied where applicable.
 
