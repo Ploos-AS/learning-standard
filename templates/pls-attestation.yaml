@@ -1,0 +1,17 @@
+attestation:
+  specification: "0.1"
+  review_commit: "0123456789abcdef0123456789abcdef01234567"
+  through_commit: "89abcdef0123456789abcdef0123456789abcdef"
+  date: "2026-10-01"
+
+attestant:
+  name: "Maintainer Name"
+  role: "Maintainer"
+  affiliation: "Ploos AS"
+
+assessment:
+  non_material: true
+  reason: "Corrected spelling and punctuation without changing terminology, examples, exercises, outcomes, or learner meaning."
+  changed_paths:
+    - "course/no/example.md"
+  evidence: []
