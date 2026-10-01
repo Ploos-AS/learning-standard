@@ -33,6 +33,41 @@ This repository is the canonical specification for the standard.
 - [`LEVELS.md`](LEVELS.md) — PLS progression levels
 - [`CHAPTER-TEMPLATE.md`](CHAPTER-TEMPLATE.md) — recommended learning-unit structure
 - [`COMPLIANCE.md`](COMPLIANCE.md) — checklist for declaring PLS alignment
+- [`GLOSSARY.md`](GLOSSARY.md) — terminology and glossary rules
+- [`EXERCISES.md`](EXERCISES.md) — common exercise taxonomy
+
+## Machine-readable metadata
+
+PLS resources can declare their pedagogical contract in a repository-level `pls.yaml` file.
+
+The canonical schema is [`schema/pls.schema.json`](schema/pls.schema.json), with a minimal example in [`examples/pls.yaml`](examples/pls.yaml).
+
+Example:
+
+```yaml
+pls:
+  specification: "0.1"
+  entry_level: 0
+  exit_level: 3
+  status: draft
+
+resource:
+  title: "Example resource"
+  type: book
+  language: [en]
+  scope: "The stated subject scope."
+  prerequisites: []
+  learning_outcomes:
+    - "Explain the central concepts using correct terminology."
+```
+
+Validate metadata with:
+
+```sh
+python tools/pls_lint.py pls.yaml
+```
+
+`pls-lint` validates both the schema and PLS-specific rules such as `exit_level >= entry_level`.
 
 ## Level notation
 
@@ -43,6 +78,12 @@ PLS: 0 -> 3
 ```
 
 This means that the resource assumes approximately PLS-0 subject knowledge at entry and aims to bring the learner to PLS-3 competence for its stated scope.
+
+## CI
+
+This repository validates the reference metadata in GitHub Actions. Ploos Edu repositories may reuse the schema and validator to enforce their own `pls.yaml` metadata in CI.
+
+Machine validation complements pedagogical review; it does not replace the human compliance review described in `COMPLIANCE.md`.
 
 ## Scope
 
