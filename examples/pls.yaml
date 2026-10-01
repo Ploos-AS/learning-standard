@@ -2,7 +2,7 @@ pls:
   specification: "0.1"
   entry_level: 0
   exit_level: 3
-  status: draft
+  status: adopting
 
 resource:
   title: "Example PLS Resource"
