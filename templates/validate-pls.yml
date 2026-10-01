@@ -1,0 +1,37 @@
+name: Validate PLS
+
+on:
+  push:
+    paths:
+      - 'pls.yaml'
+      - '**/*.md'
+      - '.github/workflows/validate-pls.yml'
+  pull_request:
+    paths:
+      - 'pls.yaml'
+      - '**/*.md'
+      - '.github/workflows/validate-pls.yml'
+
+jobs:
+  validate-pls:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check out PLS specification
+        uses: actions/checkout@v4
+        with:
+          repository: Ploos-AS/learning-standard
+          ref: main
+          path: .pls-standard
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install validator dependencies
+        run: python -m pip install --upgrade pip pyyaml jsonschema
+
+      - name: Validate PLS metadata
+        run: python .pls-standard/tools/pls_lint.py pls.yaml --schema .pls-standard/schema/pls.schema.json
