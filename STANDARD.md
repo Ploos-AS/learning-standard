@@ -132,6 +132,18 @@ PLS: 0 -> 3
 PLS specification: 0.1
 ```
 
-## 10. Version status
+## 10. AI-assisted development transparency
+
+### PLS-REQ-13 — AI disclosure and human responsibility
+
+When artificial intelligence has materially assisted the creation of a Ploos learning resource, the published resource MUST disclose that use in clear language.
+
+The disclosure SHOULD identify the general kinds of assistance involved, such as ideation, structuring, language editing, or technical quality assurance. It MUST NOT imply that AI is the author or bears editorial responsibility when that is not the case.
+
+A named human author or responsible editor MUST review the published content and retain editorial responsibility for it. AI assistance MUST NOT replace the human pedagogical review required for `reviewed` or `compliant` PLS status.
+
+The standard Ploos publishing colophon SHOULD be used when applicable so that disclosure remains consistent across language editions and publication formats.
+
+## 11. Version status
 
 PLS 0.1 is experimental and may change incompatibly before PLS 1.0.
